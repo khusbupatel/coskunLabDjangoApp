@@ -79,7 +79,7 @@ DATABASES = {
     'NAME': 'CoskunLab',
     'USER': 'postgres',
     'PASSWORD': 'CoskunlabGT2019',
-    'HOST': 'coskunlab.czcqvkfunr2l.us-east-1.rds.amazonaws.com',
+    'HOST': 'coskunlab.ci43u1fhj6t1.us-east-2.rds.amazonaws.com',
     'PORT': '5432',
     }
 }
