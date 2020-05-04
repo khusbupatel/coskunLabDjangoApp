@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=C:\Users\Ethan\Documents\Ethan's Programs\dev\coskunlab"
+set "VIRTUAL_ENV=C:\Users\Ethan\Documents\Github\coskun"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
