@@ -8,8 +8,8 @@ class Inventory:
         self.status = status
         self.refillNeeded = refillNeeded
 
-    def needsRefill(self) {
-        if (self.current_quantity < self.min_quantity) {
+    def needsRefill(self): 
+        if (self.current_quantity < self.min_quantity):
             self.refillNeeded = true
-        }
-    }
+        return self.refillNeeded
+        

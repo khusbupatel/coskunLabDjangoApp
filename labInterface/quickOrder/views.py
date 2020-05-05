@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from .serializers import PostSerializer
 from .models import Post
 from .utilities import getAllObjects
+from .utilities import getObject
 
 
 @api_view(['GET'])
