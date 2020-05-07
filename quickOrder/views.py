@@ -7,8 +7,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import PostSerializer
-from .models import Post
+from .serializers import InventoryItemSerializer
+from .models import InventoryItem
 from .utilities import getAllObjects
 from .utilities import getObject
 
@@ -16,12 +16,12 @@ from .utilities import getObject
 @api_view(['GET'])
 def getInventory(request):
     items = getAllObjects()
-    serializer = PostSerializer(items, many = True)
+    serializer = InventoryItemSerializer(items, many = True)
     return Response(serializer.data)
 
 @api_view(['POST'])
 def addItem(request):
-    serializer = PostSerializer(data = request.data)
+    serializer = InventoryItemSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -30,13 +30,13 @@ def addItem(request):
 @api_view(['GET'])
 def getItem(request, pk):
     item = getObject(pk)
-    serializer = PostSerializer(item, many = False)
+    serializer = InventoryItemSerializer(item, many = False)
     return Response(serializer.data)
 
 @api_view(['PUT'])
 def updateItem(request, pk):
     item = getObject(pk)
-    serializer = PostSerializer(instance = item, data = request.data)
+    serializer = InventoryItemSerializer(instance = item, data = request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

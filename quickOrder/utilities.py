@@ -1,19 +1,10 @@
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.http import Http404
-from rest_framework import status
-
-# third party imports
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-
-from .serializers import PostSerializer
-from .models import Post
+from .serializers import InventoryItemSerializer
+from .models import InventoryItem
 
 def getAllObjects():
-    return Post.objects.all()
+    return InventoryItem.objects.all()
 
 def getObject(pk):
-    return Post.objects.get(id = pk)
+    return InventoryItem.objects.get(id = pk)
 
 
