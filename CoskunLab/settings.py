@@ -25,7 +25,11 @@ SECRET_KEY = 'l_&+jbc%ccaz$!t4j!bk(wqd%ls%_x2ftoczambu8i-tl4l6os'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0577c5c4.ngrok.io',
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -40,7 +44,7 @@ INSTALLED_APPS = [
     'labInterface',
     'rest_framework',
     'quickOrder',
-    'UserManagement'
+    'UserManagement',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +109,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Slack API Configuration
+
+SLACK_CLIENT_ID = '1151661690016.1153170960080'
+SLACK_CLIENT_SECRET = 'd8a660ec679dd62c72319806f1369136'
+SLACK_VERIFICATION_TOKEN = 'J6IOU3T3WHH8DqXvVi2pUdvj'
+SLACK_BOT_USER_TOKEN = 'xoxb-1151661690016-1129336370418-4BsG7WYoVlAjpgWXcLNDp2no'
 
 
 # Internationalization

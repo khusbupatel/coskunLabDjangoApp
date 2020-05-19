@@ -9,13 +9,13 @@ from rest_framework.decorators import api_view
 
 from .serializers import InventoryItemSerializer
 from .models import InventoryItem
-from .utilities import getAllObjects
-from .utilities import getObject
+from .utilities import getAllInventoryObjects
+from .utilities import getInventoryObject
 
 
 @api_view(['GET'])
 def getInventory(request):
-    items = getAllObjects()
+    items = getAllInventoryObjects()
     serializer = InventoryItemSerializer(items, many = True)
     return Response(serializer.data)
 
@@ -29,13 +29,13 @@ def addItem(request):
 
 @api_view(['GET'])
 def getItem(request, pk):
-    item = getObject(pk)
+    item = getInventoryObject(pk)
     serializer = InventoryItemSerializer(item, many = False)
     return Response(serializer.data)
 
 @api_view(['PUT'])
 def updateItem(request, pk):
-    item = getObject(pk)
+    item = getInventoryObject(pk)
     serializer = InventoryItemSerializer(instance = item, data = request.data)
     if serializer.is_valid():
         serializer.save()
@@ -44,7 +44,7 @@ def updateItem(request, pk):
 
 @api_view(['DELETE'])
 def deleteItem(request, pk):
-    item = getObject(pk)
+    item = getInventoryObject(pk)
     item.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 

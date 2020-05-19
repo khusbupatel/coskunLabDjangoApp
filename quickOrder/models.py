@@ -1,5 +1,5 @@
 from django.db import models
-from .Inventory import Inventory
+from django.utils import timezone
 
 # Create your models here.
 
@@ -9,10 +9,17 @@ class InventoryItem(models.Model):
     min_quantity = models.IntegerField()
     refillNeeded = models.BooleanField(default = False)
     isOrdered = models.BooleanField(default = False)
-    status = models.TextField(blank = True)
-    requested_quantity = models.IntegerField(default = 0)
-
 
     def __str__(self):
         return self.item_name
-        
+
+class Order(models.Model):
+    order_id = models.AutoField(primary_key = True, unique = True)
+    item_id = models.ForeignKey(InventoryItem, on_delete = models.CASCADE)
+    status = models.TextField(default = "Pending Approval")
+    requested_quantity = models.IntegerField(default = 0)
+    order_date = models.DateTimeField(default = timezone.now)
+    # add user
+
+    def __str__(self):
+        return self.item_name
