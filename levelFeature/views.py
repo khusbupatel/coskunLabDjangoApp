@@ -12,15 +12,15 @@ from .serializers import LevelReadingSerializer
 @api_view(['GET'])
 def get_list(request):
     if request.method == 'GET':
-        readings = LevelReading.objects.all().order_by("-id")
+        readings = LevelReading.objects.all().order_by("-sr_num")
         serializer = LevelReadingSerializer(readings, many=True)
         return Response(serializer.data)
 
 
 @api_view(['GET'])
-def get_reading(request, pk):
+def get_reading(request, sr_num):
     queryset = LevelReading.objects.all()
-    reading_instance = get_object_or_404(queryset, pk=pk)
+    reading_instance = get_object_or_404(queryset, pk=sr_num)
     serializer = LevelReadingSerializer(reading_instance)
     return Response(serializer.data)
 
@@ -35,8 +35,8 @@ def post_reading(request):
 
 
 @api_view(['DELETE'])
-def delete_reading(request, pk):
+def delete_reading(request, sr_num):
     queryset = LevelReading.objects.all()
-    reading_instance = get_object_or_404(queryset, pk=pk)
+    reading_instance = get_object_or_404(queryset, pk=sr_num)
     reading_instance.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
