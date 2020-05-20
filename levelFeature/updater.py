@@ -17,6 +17,6 @@ def read_csv(csv_file):
 
 
 scheduler = BackgroundScheduler()
-# scheduler.add_job(read_csv, CronTrigger.from_crontab('2 * * * *'), args=[r'C:\Users\allis\Downloads\csv_file.csv'])
-scheduler.add_job(read_csv, 'cron', hour='*', args=[r'C:\Users\allis\Downloads\csv_file.csv'])
+# scheduler.add_job(read_csv, CronTrigger.from_crontab('2 * * * *'), args=["example_csv.csv])
+scheduler.add_job(read_csv, 'cron', hour='*', args=["example_csv.csv"])
 scheduler.start()
