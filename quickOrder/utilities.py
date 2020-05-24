@@ -15,4 +15,17 @@ def getAllOrderObjects():
 def getOrderObject(pk):
     return Order.objects.get(order_id = pk)
 
+def updateOrderStatus(updatedStatus, pk):
+    order = getOrderObject(pk)
+    order.status = updatedStatus
+    order.save() 
 
+def updateInventoryStatus(updatedStatus, pk):
+    item = getInventoryObject(pk)
+    item.isOrdered = updatedStatus
+    item.save() 
+
+def updateInventoryQuantity(quantity, pk):
+    item = getInventoryObject(pk)
+    item.current_quantity = item.current_quantity + quantity
+    item.save() 

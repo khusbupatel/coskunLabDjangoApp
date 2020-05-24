@@ -19,7 +19,7 @@ class Order(models.Model):
     status = models.TextField(default = "Pending Approval")
     requested_quantity = models.IntegerField(default = 0)
     order_date = models.DateTimeField(default = timezone.now)
-    # add user
-
+    user = models.TextField()
+    
     def __str__(self):
-        return self.item_name
+        return self.status

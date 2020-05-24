@@ -17,7 +17,9 @@ urlpatterns = [
     path('update-order/<str:pk>/', orderViews.updateOrder, name = 'update-order'),
     path('delete-order/<str:pk>/', orderViews.deleteOrder, name = 'delete-order'),
     
-    path('coskun/', slackViews.getProfApproval, name = 'Dr. Coskun'),
-    path('finance/', slackViews.sendToFinance, name = 'Finance'),
-    path('financeFollowUp/', slackViews.followUpFinance, name = 'Finance Follow Up')
+    path('coskun/<str:fk>/<str:pk>/', slackViews.getProfApproval, name = 'Dr. Coskun'),
+    path('finance/<str:fk>/<str:pk>/', slackViews.sendToFinance, name = 'Finance'),
+    path('financeFollowUp/<str:fk>/<str:pk>/', slackViews.followUpFinance, name = 'Finance Follow Up'),
+    path('approval/', slackViews.CoskunApprove, name = 'approval')
+
 ]
