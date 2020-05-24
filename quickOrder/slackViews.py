@@ -12,7 +12,7 @@ from .utilities import updateOrderStatus
 from .utilities import updateInventoryStatus
 from .utilities import updateInventoryQuantity
 
-slackClient = WebClient('XXX')
+slackClient = WebClient('xoxb-1151661690016-1129336370418-n8ziONYFxggR9CYtenss9Gm4')
 
 @api_view(['POST'])
 def getProfApproval(request, fk, pk):

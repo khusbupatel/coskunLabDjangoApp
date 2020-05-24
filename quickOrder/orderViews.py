@@ -38,9 +38,9 @@ def getOrder(request, pk):
     return Response(serializer.data)
 
 @api_view(['PUT'])
-def updateOrder(request, updated, pk):
+def updateOrder(request, pk):
     item = getOrderObject(pk)
-    serializer = OrderSerializer(instance = item, data = updated)
+    serializer = Orderserializer(instance = item, data = request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
