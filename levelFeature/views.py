@@ -25,6 +25,13 @@ def get_reading(request, sr_num):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_latest(request):
+    latest_reading = LevelReading.objects.order_by("-id")[0]
+    serializer = LevelReadingSerializer(latest_reading)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def post_reading(request):
     serializer = LevelReadingSerializer(data=request.data)
