@@ -18,8 +18,10 @@ urlpatterns = [
     path('delete-order/<str:pk>/', orderViews.deleteOrder, name = 'delete-order'),
     
     path('coskun/<str:fk>/<str:pk>/', slackViews.getProfApproval, name = 'Dr. Coskun'),
-    path('finance/<str:fk>/<str:pk>/', slackViews.sendToFinance, name = 'Finance'),
-    path('financeFollowUp/<str:fk>/<str:pk>/', slackViews.followUpFinance, name = 'Finance Follow Up'),
-    path('approval/', slackViews.CoskunApprove, name = 'approval')
+    path('approval/', slackViews.CoskunApprove, name = 'approval'),
+    path('financeApproval/<str:pk>/<str:fk>/', slackViews.FinanceApprove, name = 'Finance approval'),
+    path('financeDeliver/<str:pk>/<str:fk>/', slackViews.FinanceDeliver, name = 'Finance Deliver'),
+    path('financeCancel/<str:pk>/<str:fk>/', slackViews.FinanceCancel, name = 'Finance Cancel')
+
 
 ]

@@ -10,8 +10,9 @@ from rest_framework import status
 
 from .serializers import OrderSerializer
 from .models import Order
-from .utilities import getAllOrderObjects
-from .utilities import getOrderObject
+from .database import getAllOrderObjects
+from .database import getOrderObject
+from .slackViews import getProfApproval
 
 
 # Called on Submit Request
@@ -20,6 +21,7 @@ def addOrder(request):
     serializer = OrderSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
+        getProfApproval(request._request, serializer.data.get("item_id"), serializer.data.get("order_id"))
         return Response(serializer.data)
     return Response(serializer.errors)
 

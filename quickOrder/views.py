@@ -9,8 +9,8 @@ from rest_framework.decorators import api_view
 
 from .serializers import InventoryItemSerializer
 from .models import InventoryItem
-from .utilities import getAllInventoryObjects
-from .utilities import getInventoryObject
+from .database import getAllInventoryObjects
+from .database import getInventoryObject
 
 
 @api_view(['GET'])
