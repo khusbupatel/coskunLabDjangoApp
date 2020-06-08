@@ -16,11 +16,8 @@ from .database import updateInventoryQuantity
 from mailjet_rest import Client
 import os
 
-api_key = '36eb38a2e21cbd237ca510f857f15d7e'
-api_secret = '96638375a5627dcbd0f7ec38276fb616'
-mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+# SLACK AND MAILJET CREDENTIALS
 
-slackClient = WebClient('xoxb-1151661690016-1129336370418-DNYHkj2nkci7xEIwIlu0PM5V')
 
 @api_view(['POST'])
 def getProfApproval(request, fk, pk):
