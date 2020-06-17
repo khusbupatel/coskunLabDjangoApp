@@ -21,11 +21,11 @@ from mailjet_rest import Client
 import os
 
 # SLACK AND MAILJET CREDENTIALS
-api_key = '36eb38a2e21cbd237ca510f857f15d7e'
-api_secret = '96638375a5627dcbd0f7ec38276fb616'
+api_key = 'XXX'
+api_secret = 'XXX'
 mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 
-slackClient = WebClient('xoxb-1151661690016-1129336370418-9xd9iGgCRzlST3aTtZ0BK7ql')
+slackClient = WebClient('XXX')
 
 @api_view(['POST'])
 def getProfApproval(request, fk, pk):
