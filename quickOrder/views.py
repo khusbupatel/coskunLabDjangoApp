@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.http import Http404 
 from rest_framework import status
 
-# third party imports
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -11,27 +10,26 @@ from .serializers import InventoryItemSerializer
 from .models import InventoryItem
 from .database import getAllInventoryObjects
 from .database import getInventoryObject
+from .database import updateRefillNeeded
 
 
 @api_view(['GET'])
 def getInventory(request):
-    items = getAllInventoryObjects()
-    serializer = InventoryItemSerializer(items, many = True)
-    return Response(serializer.data)
+    try: 
+        items = getAllInventoryObjects()
+        serializer = InventoryItemSerializer(items, many = True)
+        updateRefillNeeded(items)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    except:
+        return Response(status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
 def addItem(request):
     serializer = InventoryItemSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors)
-
-@api_view(['GET'])
-def getItem(request, pk):
-    item = getInventoryObject(pk)
-    serializer = InventoryItemSerializer(item, many = False)
-    return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
 def updateItem(request, pk):
@@ -39,7 +37,7 @@ def updateItem(request, pk):
     serializer = InventoryItemSerializer(instance = item, data = request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])

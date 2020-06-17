@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.http import Http404 
 from django.core.exceptions import ObjectDoesNotExist
 
-# third party imports
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -11,8 +10,8 @@ from rest_framework import status
 from .serializers import OrderSerializer
 from .models import Order
 from .database import getAllOrderObjects
-from .database import getOrderObject
-from .slackViews import getProfApproval
+from .database import updateOrderName
+from .messageViews import getProfApproval
 
 
 # Called on Submit Request
@@ -22,31 +21,16 @@ def addOrder(request):
     if serializer.is_valid():
         serializer.save()
         getProfApproval(request._request, serializer.data.get("item_id"), serializer.data.get("order_id"))
-        return Response(serializer.data)
-    return Response(serializer.errors)
+        updateOrderName(serializer.data.get("order_id"), serializer.data.get("item_id"))
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 # View Order Table on frontend side
 @api_view(['GET'])
 def getOrders(request):
     items = getAllOrderObjects()
     serializer = OrderSerializer(items, many = True)
-    return Response(serializer.data)
-
-# Need for Slack calls
-@api_view(['GET'])
-def getOrder(request, pk):
-    item = getOrderObject(pk)
-    serializer = OrderSerializer(item, many = False)
-    return Response(serializer.data)
-
-@api_view(['PUT'])
-def updateOrder(request, pk):
-    item = getOrderObject(pk)
-    serializer = Orderserializer(instance = item, data = request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.data, status = status.HTTP_200_OK)
 
 @api_view(['DELETE'])
 def deleteOrder(request, pk):
