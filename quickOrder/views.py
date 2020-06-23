@@ -8,9 +8,9 @@ from rest_framework.decorators import api_view
 
 from .serializers import InventoryItemSerializer
 from .models import InventoryItem
-from .database import getAllInventoryObjects
-from .database import getInventoryObject
-from .database import updateRefillNeeded
+from .database_abstraction import getAllInventoryObjects
+from .database_abstraction import getInventoryObject
+from .database_abstraction import updateRefillNeeded
 
 
 @api_view(['GET'])
@@ -42,8 +42,10 @@ def updateItem(request, pk):
 
 @api_view(['DELETE'])
 def deleteItem(request, pk):
-    item = getInventoryObject(pk)
-    item.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
-
+    try: 
+        item = getInventoryObject(pk)
+        item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except:
+        return Response(status = status.HTTP_400_BAD_REQUEST)
 

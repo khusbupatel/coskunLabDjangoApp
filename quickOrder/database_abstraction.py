@@ -5,18 +5,13 @@ from .models import Order
 from UserManagement.models import User
 
 def getAllInventoryObjects():
-    return InventoryItem.objects.all().order_by('id')
+    return InventoryItem.objects.all().order_by('item_name')
 
-def getInventoryObject(pk):
-    return InventoryItem.objects.get(id = pk)
+def getInventoryObject(item_id):
+    return InventoryItem.objects.get(id = item_id)
 
-def updateInventoryStatus(updatedStatus, pk):
-    item = getInventoryObject(pk)
-    item.is_ordered = updatedStatus
-    item.save() 
-
-def updateInventoryQuantity(quantity, pk):
-    item = getInventoryObject(pk)
+def updateInventoryQuantity(quantity, item_id):
+    item = getInventoryObject(item_id)
     item.current_quantity = item.current_quantity + quantity
     item.save() 
 
@@ -34,23 +29,23 @@ def updateRefillNeeded(items):
 def getAllOrderObjects():
     return Order.objects.all().order_by('order_date', 'order_id')
 
-def getOrderObject(pk):
-    return Order.objects.get(order_id = pk)
+def getOrderObject(order_id):
+    return Order.objects.get(order_id = order_id)
 
-def updateOrderStatus(updatedStatus, pk):
-    order = getOrderObject(pk)
-    order.status = updatedStatus
+def updateOrderStatus(updated_status, order_id):
+    order = getOrderObject(order_id)
+    order.status = updated_status
     order.save() 
 
-def updateOrderName(pk, fk):
-    item = getInventoryObject(fk)
-    order = getOrderObject(pk)
+def updateOrderName(order_id, item_id):
+    item = getInventoryObject(item_id)
+    order = getOrderObject(order_id)
     order.order_name = item.item_name
     order.save()
 
 
 
-def getUserEmail(pk):
-    return User.objects.get(id = pk).email
+def getUserEmail(user_id):
+    return User.objects.get(id = user_id).email
 
     
