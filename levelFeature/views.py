@@ -42,8 +42,7 @@ def post_reading(request):
 
 
 @api_view(['DELETE'])
-def delete_reading(request, sr_num):
-    queryset = LevelReading.objects.all()
-    reading_instance = get_object_or_404(queryset, pk=sr_num)
-    reading_instance.delete()
+def delete_readings(request):
+    readings = LevelReading.objects.all()
+    readings.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
