@@ -12,7 +12,7 @@ from .models import Order
 from .database_abstraction import getAllOrderObjects
 from .database_abstraction import getOrderObject
 from .database_abstraction import updateOrderName
-from .message_views import getProfApproval
+from .message_views import getApproval
 
 
 # Called on Submit Request
@@ -21,7 +21,7 @@ def addOrder(request):
     serializer = OrderSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
-        getProfApproval(request._request, serializer.data.get("order_id"), serializer.data.get("item_id"))
+        getApproval(request._request, serializer.data.get("order_id"), serializer.data.get("item_id"))
         updateOrderName(serializer.data.get("order_id"), serializer.data.get("item_id"))
         return Response(serializer.data, status = status.HTTP_200_OK)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
