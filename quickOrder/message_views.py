@@ -29,16 +29,16 @@ mailjet = Client(auth=(secret_keys.api_key, secret_keys.api_secret), version='v3
 slackClient = WebClient(secret_keys.slack_key)
 
 @api_view(['POST'])
-def getProfApproval(request, order_id, item_id):
+def getApproval(request, order_id, item_id):
     slackClient.chat_postMessage(
-        channel = '#project',
+        channel = 'G0169TH7561',
         blocks = slackMessage(order_id, item_id)
     )
 
     return Response(status = status.HTTP_200_OK )
 
 @api_view(['POST'])
-def CoskunApprove(request):
+def AdminApprove(request):
     check = json.loads(request.POST.get("payload"))
     buttonName = check.get("actions")[0].get("text").get("text")
     item_id = check.get("actions")[0].get("block_id").split(":")[1]
@@ -48,7 +48,7 @@ def CoskunApprove(request):
     if buttonName == 'Approve':
         updateOrderStatus("Approved", order_id)
         slackClient.chat_update(
-            channel = "C013RQ9F0RG",
+            channel = "G0169TH7561",
             ts = check.get("message").get("ts"),
             blocks = slackApprove(order_id, item_id)
         )
@@ -59,7 +59,7 @@ def CoskunApprove(request):
     if buttonName == 'Decline':
         updateOrderStatus("Declined", order_id)
         slackClient.chat_update(
-            channel = "C013RQ9F0RG",
+            channel = "G0169TH7561",
             ts = check.get("message").get("ts"),
             blocks = slackDecline(order_id, item_id)
         )
