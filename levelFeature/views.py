@@ -11,25 +11,29 @@ from .serializers import LevelReadingSerializer
 
 @api_view(['GET'])
 def get_list(request):
-    if request.method == 'GET':
-        readings = LevelReading.objects.all().order_by("-sr_num")
-        serializer = LevelReadingSerializer(readings, many=True)
-        return Response(serializer.data)
+    readings = LevelReading.objects.all().order_by("-sr_num")
+    serializer = LevelReadingSerializer(readings, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
 def get_reading(request, sr_num):
-    queryset = LevelReading.objects.all()
-    reading_instance = get_object_or_404(queryset, pk=sr_num)
+    readings = LevelReading.objects.all()
+    reading_instance = get_object_or_404(readings, pk=sr_num)
     serializer = LevelReadingSerializer(reading_instance)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 def get_latest(request):
-    latest_reading = LevelReading.objects.order_by("-id")[0]
-    serializer = LevelReadingSerializer(latest_reading)
-    return Response(serializer.data)
+    readings = LevelReading.objects.all()
+
+    if not readings:
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        latest_reading = readings.order_by("-id")[0]
+        serializer = LevelReadingSerializer(latest_reading)
+        return Response(serializer.data)
 
 
 @api_view(['POST'])

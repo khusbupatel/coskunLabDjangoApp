@@ -1,7 +1,7 @@
+import os
 import requests
-from apscheduler.triggers.cron import CronTrigger
 from apscheduler.schedulers.background import BackgroundScheduler
-import example_csv.csv
+from . import constants
 
 
 def read_csv(csv_file):
@@ -17,13 +17,16 @@ def read_csv(csv_file):
 
     new_reading = {"sr_num": sr_num, "time": time, "reading_value": level}
 
-    requests.delete(DELETE_READINGS)
+    requests.delete(constants.DELETE_READINGS)
     print('Deleted tasks')
 
-    resp = requests.post(POST_LATEST, json=new_reading)
+    resp = requests.post(constants.POST_LATEST, json=new_reading)
     print('Created task. ID: {}'.format(resp.json()["id"]))
 
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(read_csv, CronTrigger.from_crontab('2 * * * *'), args=[example_csv])
-scheduler.start()
+def start():
+    csv_path = os.path.abspath('./levelFeature/example_csv.csv')
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(read_csv, 'interval', minutes=10, args=[csv_path])
+    scheduler.start()
