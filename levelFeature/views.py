@@ -35,7 +35,7 @@ def get_latest(request):
         serializer = LevelReadingSerializer(latest_reading)
         return Response(serializer.data)
 
-
+      
 @api_view(['POST'])
 def post_reading(request):
     serializer = LevelReadingSerializer(data=request.data)
