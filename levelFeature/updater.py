@@ -1,7 +1,6 @@
 import os
-import requests
 from apscheduler.schedulers.background import BackgroundScheduler
-from . import constants
+from .models import LevelReading
 
 
 def read_csv(csv_file):
@@ -15,13 +14,12 @@ def read_csv(csv_file):
     time = line.split(',')[1]
     level = int(line.split(',')[2])
 
-    new_reading = {"sr_num": sr_num, "time": time, "reading_value": level}
+    LevelReading.objects.all().delete()
+    print('Deleted reading.')
 
-    requests.delete(constants.DELETE_READINGS)
-    print('Deleted tasks')
-
-    resp = requests.post(constants.POST_LATEST, json=new_reading)
-    print('Created task. ID: {}'.format(resp.json()["id"]))
+    new_reading = LevelReading(sr_num=sr_num, time=time, reading_value=level)
+    new_reading.save()
+    print('Added reading.')
 
 
 def start():
