@@ -14,12 +14,12 @@ def read_csv(csv_file):
     time = line.split(',')[1]
     level = int(line.split(',')[2])
 
+    # Deletes previous reading(s)
     LevelReading.objects.all().delete()
-    print('Deleted reading.')
 
+    # Adds most recent reading
     new_reading = LevelReading(sr_num=sr_num, time=time, reading_value=level)
     new_reading.save()
-    print('Added reading.')
 
 
 def start():
