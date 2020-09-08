@@ -115,7 +115,7 @@ def getDashboard(request):
     body_data = json.loads(body_unicode)
     user_id = body_data["user_id"]
 
-    dashboard = Dashboard.objects.filter(id = user_id)
+    dashboard = Dashboard.objects.filter(user_id = user_id)
 
     wanted_research = set()
 
@@ -126,8 +126,6 @@ def getDashboard(request):
             if research == pos.research:
                 nothing_added = False
                 wanted_research.add(research.id)
-
-    nothing_added = False
 
     if nothing_added:
         return Response(status=status.HTTP_400_BAD_REQUEST)
