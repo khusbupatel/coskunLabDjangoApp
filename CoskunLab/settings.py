@@ -26,7 +26,7 @@ SECRET_KEY = 'l_&+jbc%ccaz$!t4j!bk(wqd%ls%_x2ftoczambu8i-tl4l6os'
 DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'django-env.eba-ug8ruwff.us-east-1.elasticbeanstalk.com']
 
 
 # Application definition
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'labInterface',
     'rest_framework',
     'QuickOrder',
     'UserManagement',

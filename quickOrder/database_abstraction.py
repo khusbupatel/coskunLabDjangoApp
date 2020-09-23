@@ -27,7 +27,7 @@ def updateRefillNeeded(items):
 
 
 def getAllOrderObjects():
-    return Order.objects.all().order_by('order_date', 'order_id')
+    return Order.objects.all().order_by('-order_date', '-order_id')
 
 def getOrderObject(order_id):
     return Order.objects.get(order_id = order_id)
