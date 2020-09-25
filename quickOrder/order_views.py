@@ -12,6 +12,7 @@ from .models import Order
 from .database_abstraction import getAllOrderObjects
 from .database_abstraction import getOrderObject
 from .database_abstraction import updateOrderName
+from .database_abstraction import addStatusQuantity
 from .message_views import getApproval
 
 
@@ -35,6 +36,11 @@ def getOrders(request):
         return Response(serializer.data, status = status.HTTP_200_OK)
     except:
         return Response(status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def getStatusQuantity(request):
+    count = addStatusQuantity()
+    return Response(count)
 
 @api_view(['DELETE'])
 def deleteOrder(request, order_id):

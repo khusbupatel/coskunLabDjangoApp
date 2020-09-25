@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('orders/', order_views.getOrders, name = 'orders'),
     path('add-order/', order_views.addOrder, name = 'add-order'),
+    path('statusQuantity/', order_views.getStatusQuantity, name = 'status-quantity'),
     path('delete-order/<str:order_id>/', order_views.deleteOrder, name = 'delete-order'),
     
     path('coskun/<str:order_id>/<str:item_id>/', message_views.getApproval, name = 'approval'),
