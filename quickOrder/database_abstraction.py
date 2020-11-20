@@ -5,7 +5,7 @@ from .models import Order
 from UserManagement.models import User
 
 def getAllInventoryObjects():
-    return InventoryItem.objects.all().order_by('item_name')
+    return InventoryItem.objects.filter(is_deleted = False).order_by('item_name')
 
 def getInventoryObject(item_id):
     return InventoryItem.objects.get(id = item_id)
@@ -23,8 +23,6 @@ def updateRefillNeeded(items):
         if item.current_quantity > item.min_quantity:
             item.refill_needed = False
             item.save()
-
-
 
 def getAllOrderObjects():
     return Order.objects.all().order_by('-order_date', 'order_id')
@@ -61,5 +59,5 @@ def addStatusQuantity():
                 pendingCount += order.requested_quantity
             if order.status == "Approved":
                 approvedCount += order.requested_quantity
-        quantity.append([pendingCount, approvedCount])
+        quantity.append([item.id, pendingCount, approvedCount])
     return quantity
