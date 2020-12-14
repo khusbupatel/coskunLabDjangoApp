@@ -45,19 +45,3 @@ def updateOrderName(order_id, item_id):
 
 def getUserEmail(user_id):
     return User.objects.get(id = user_id).email
-
-
-def addStatusQuantity():
-    quantity = []
-    inventory = getAllInventoryObjects()
-    for item in inventory:
-        orders = Order.objects.all().filter(item_id = item.id)
-        pendingCount = 0
-        approvedCount = 0
-        for order in orders:
-            if order.status == "Pending Approval":
-                pendingCount += order.requested_quantity
-            if order.status == "Approved":
-                approvedCount += order.requested_quantity
-        quantity.append([item.id, pendingCount, approvedCount])
-    return quantity
