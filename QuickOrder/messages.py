@@ -67,12 +67,12 @@ def email(order_id, item_id):
             'Messages': [
                     {
                         "From": {
-                            "Email": "kpatel607@gatech.edu",
+                            "Email": "coskunlab@gatech.edu",
                             "Name": "Coskun Lab"
                         },
                         "To": [
                             {
-                                "Email": "patelparadise39@gmail.com",
+                                "Email": "coskunlaboratory@gmail.com",
                                 "Name": "Finance"
                             }
                         ],

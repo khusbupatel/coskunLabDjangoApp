@@ -11,6 +11,6 @@ urlpatterns = [
     path('get-Research/', views.getResearch, name='get-Research'),
     path('get-Dashboard/', views.getDashboard, name='get-Dashboard'),
     path('add-ResearchtoDashboard/', views.addResearchtoDashboard, name='add-ResearchtoDashboard'),
-    path('get-allDashboards/', views.getAllDashboards, name='get-allDasboards'),
+    path('get-allDashboards/', views.getAllDashboards, name='get-allDashboards'),
     path('delete-ResearchfromDashboard/', views.deleteResearchfromDashboard, name='delete-ResearchfromDashboard')
 ]

@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.shortcuts import get_object_or_404
 
 from .models import LevelReading, Livestream
 from .serializers import LevelReadingSerializer, LivestreamSerializer
@@ -12,7 +11,6 @@ from .serializers import LevelReadingSerializer, LivestreamSerializer
 @api_view(['GET'])
 def get_latest(request):
     readings = LevelReading.objects.all()
-
     if not readings:
         return Response(status=status.HTTP_204_NO_CONTENT)
     else:
@@ -43,4 +41,3 @@ def delete_livestream(request, id):
     livestream_instance = get_object_or_404(queryset, id=id)
     livestream_instance.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
-

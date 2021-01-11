@@ -20,10 +20,10 @@ from rest_framework.response import Response
 def deleteUser(request):
     body_unicode = request.body.decode('utf-8')
     try:
-        body_data = json.loads(body_unicode)
-        user_id = body_data["user_id"]
+        user_id = int(request.GET.get("user_id"))
         user = User.objects.get(id = user_id)
-        user.delete()
+        user.is_deleted = True
+        user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -32,13 +32,12 @@ def deleteUser(request):
 def getUsers(request):
     body_unicode = request.body.decode('utf-8')
     try:
-        body_data = json.loads(body_unicode)
-        user_id = body_data["user_id"]
+        user_id = int(request.GET.get("user_id"))
         user = User.objects.get(id = user_id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
     except:
-        users = User.objects.all()
+        users = User.objects.filter(is_deleted = False).order_by('name')
         serializer = UserSerializer(users, many = True)
         return Response(serializer.data)
 
@@ -111,11 +110,12 @@ def getAllDashboards(request):
 
 @api_view(['GET'])
 def getDashboard(request):
-    body_unicode = request.body.decode('utf-8')
-    body_data = json.loads(body_unicode)
-    user_id = body_data["user_id"]
+    # body_unicode = request.body.decode('utf-8')
+    # body_data = json.loads(body_unicode)
+    # user_id = body_data["user_id"]
+    user_id = int(request.GET.get("user_id"))
 
-    dashboard = Dashboard.objects.filter(id = user_id)
+    dashboard = Dashboard.objects.filter(user_id = user_id)
 
     wanted_research = set()
 
@@ -126,8 +126,6 @@ def getDashboard(request):
             if research == pos.research:
                 nothing_added = False
                 wanted_research.add(research.id)
-
-    nothing_added = False
 
     if nothing_added:
         return Response(status=status.HTTP_400_BAD_REQUEST)
