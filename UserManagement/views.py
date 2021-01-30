@@ -17,13 +17,24 @@ from rest_framework.response import Response
 # Create your views here.
 
 @api_view(['DELETE'])
-def deleteUser(request):
+def softDeleteUser(request):
     body_unicode = request.body.decode('utf-8')
     try:
         user_id = int(request.GET.get("user_id"))
         user = User.objects.get(id = user_id)
         user.is_deleted = True
         user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def deleteUser(request):
+    body_unicode = request.body.decode('utf-8')
+    try:
+        user_id = int(request.GET.get("user_id"))
+        user = User.objects.get(id = user_id)
+        user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
