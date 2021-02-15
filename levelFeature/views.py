@@ -35,9 +35,11 @@ def add_livestream(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'GET'])
 def delete_livestream(request, id):
-    queryset = Livestream.objects.all()
-    livestream_instance = get_object_or_404(queryset, id=id)
-    livestream_instance.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
+    try: 
+        stream = Livestream.objects.get(id = id)
+        stream.delete()    
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except:
+        return Response(status = status.HTTP_400_BAD_REQUEST)
