@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('requested_quantity', models.IntegerField(default=0)),
                 ('order_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('order_name', models.TextField(default='Loading...')),
-                ('item_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quickOrder.InventoryItem')),
+                ('item_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='QuickOrder.InventoryItem')),
                 ('user', models.ForeignKey(on_delete=models.SET(0), to='UserManagement.User')),
             ],
         ),
