@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'QuickOrder',
+    'quickOrder',
     'UserManagement',
-    'levelFeature'
+    'levelFeature',
+    'generalOrder'
+    
     
 ]
 
