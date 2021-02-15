@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'labInterface',
     'rest_framework',
-    'QuickOrder',
+    'quickOrder',
     'UserManagement',
-    'levelFeature'
+    'levelFeature',
+    'generalOrder'
+    
     
 ]
 

@@ -35,7 +35,7 @@ def getOrderObject(order_id):
 def updateOrderStatus(updated_status, order_id):
     order = getOrderObject(order_id)
     order.status = updated_status
-    order.save() 
+    order.save()
 
 def updateOrderName(order_id, item_id):
     item = getInventoryObject(item_id)
