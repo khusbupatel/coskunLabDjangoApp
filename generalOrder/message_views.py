@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from .models import GenOrderTable
 
 from .database_abstractions import getGeneralOrderObject
+from .database_abstractions import updateOrderStatus
 
 from .messages import slackMessage
 from .messages import slackApprove
@@ -23,7 +24,7 @@ import os
 
 
 
-
+# mailjet = Client(auth=(secret_keys.api_key, secret_keys.api_secret), version='v3.1')
 slackClient = WebClient(secret_keys.slack_key)
 
 
@@ -41,7 +42,6 @@ def getApproval(request, order_id, item_id):
 
 @api_view(['POST'])
 def AdminApprove(request):
-
     check = json.loads(request.POST.get("payload"))
     buttonName = check.get("actions")[0].get("text").get("text")
     order_id = check.get("actions")[0].get("block_id").split(":")[1]
@@ -52,11 +52,10 @@ def AdminApprove(request):
         slackClient.chat_update(
             channel = "G0169TH7561",
             ts = check.get("message").get("ts"),
-            blocks = slackApprove(order_id)
         )
 
         data = email(order_id)
-        result = mailjet.send.create(data=data)
+        # result = mailjet.send.create(data=data)
 
     if buttonName == 'Decline':
         updateOrderStatus("Declined", order_id)
