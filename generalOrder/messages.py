@@ -1,9 +1,6 @@
 from .database_abstractions import getGeneralOrderObject
 
 
-
-
-
 def slackMessage(order_id):
     blocks = [
             {
@@ -80,31 +77,31 @@ def slackDecline(order_id):
     return blocks
 
 
-    def email(order_id):
-        data = {
-            'Messages': [
-                    {
-                        "From": {
-                            "Email": "coskunlab@gatech.edu",
-                            "Name": "Coskun Lab"
-                        },
-                        "To": [
-                            {
-                                "Email": "coskunlaboratory@gmail.com",
-                                "Name": "Finance"
-                            }
-                        ],
-                        "TemplateID": 2289447,
-                        "TemplateLanguage": True,
-                        "Subject": "New General Order Request",
-                        "Variables": {
-                            "item_name": str(getGeneralOrderObject(order_id).item_name) ,
-                            "requested_quantity": str(getGeneralOrderObject(order_id).quantity),
-                            "user_name": str(getGeneralOrderObject(order_id).student_name),
-                            "order_date":  str(getGeneralOrderObject(order_id).order_date),
-                            "order_id": str(order_id),
+def email(order_id):
+    data = {
+        'Messages': [
+                {
+                    "From": {
+                        "Email": "coskunlab@gatech.edu",
+                        "Name": "Coskun Lab"
+                    },
+                    "To": [
+                        {
+                            "Email": "coskunlaboratory@gmail.com",
+                            "Name": "Finance"
                         }
+                    ],
+                    "TemplateID": 2289447,
+                    "TemplateLanguage": True,
+                    "Subject": "New General Order Request",
+                    "Variables": {
+                        "item_name": str(getGeneralOrderObject(order_id).item_name) ,
+                        "requested_quantity": str(getGeneralOrderObject(order_id).quantity),
+                        "user_name": str(getGeneralOrderObject(order_id).student_name),
+                        "order_date":  str(getGeneralOrderObject(order_id).order_date),
+                        "order_id": str(order_id),
                     }
-                ]
-        }
+                }
+            ]
+    }
     return data

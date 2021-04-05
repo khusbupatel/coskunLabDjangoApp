@@ -32,7 +32,7 @@ slackClient = WebClient(secret_keys.slack_key)
 @api_view(['POST'])
 def getApproval(request, order_id, item_id):
     slackClient.chat_postMessage(
-        channel = 'G0169TH7561',
+        channel = 'C01MZSW8RRD',
         blocks = slackMessage(order_id)
     )
 
@@ -50,8 +50,9 @@ def AdminApprove(request):
     if buttonName == 'Approve':
         updateOrderStatus("Approved", order_id)
         slackClient.chat_update(
-            channel = "G0169TH7561",
+            channel = "C01MZSW8RRD",
             ts = check.get("message").get("ts"),
+            blocks = slackApprove(order_id)
         )
 
         data = email(order_id)
@@ -60,9 +61,9 @@ def AdminApprove(request):
     if buttonName == 'Decline':
         updateOrderStatus("Declined", order_id)
         slackClient.chat_update(
-            channel = "G0169TH7561",
+            channel = "C01MZSW8RRD",
             ts = check.get("message").get("ts"),
-            blocks = slackDecline(order_id)
+            blocks = slackDecline(order_id),
         )
 
     return Response(status = status.HTTP_200_OK)
