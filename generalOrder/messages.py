@@ -87,7 +87,7 @@ def email(order_id):
                     },
                     "To": [
                         {
-                            "Email": "coskunlaboratory@gmail.com",
+                            "Email": "joshptl313@gmail.com",
                             "Name": "Finance"
                         }
                     ],

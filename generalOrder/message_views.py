@@ -24,7 +24,7 @@ import os
 
 
 
-# mailjet = Client(auth=(secret_keys.api_key, secret_keys.api_secret), version='v3.1')
+mailjet = Client(auth=(secret_keys.api_key, secret_keys.api_secret), version='v3.1')
 slackClient = WebClient(secret_keys.slack_key)
 
 
@@ -56,7 +56,7 @@ def AdminApprove(request):
         )
 
         data = email(order_id)
-        # result = mailjet.send.create(data=data)
+        result = mailjet.send.create(data=data)
 
     if buttonName == 'Decline':
         updateOrderStatus("Declined", order_id)
@@ -68,5 +68,25 @@ def AdminApprove(request):
 
     return Response(status = status.HTTP_200_OK)
 
+@api_view(['GET'])
+def FinanceApprove(request, order_id):
+    if (getGeneralOrderObject(order_id).status == "Approved"):
+        updateOrderStatus("Ordered", order_id)
+        return redirect(constants.URL + '/inventory/')
+    return Response(status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+def FinanceDeliver(request, order_id):
+    if (getGeneralOrderObject(order_id).status == "Ordered"):
+        updateOrderStatus("Delivered", order_id)
+        return redirect(constants.URL + '/inventory/')
+    return Response(status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+def FinanceCancel(request, order_id):
+    if (getGeneralOrderObject(order_id).status == "Approved" or getGeneralOrderObject(order_id).status == "Ordered"):
+        updateOrderStatus("Cancelled", order_id)
+        return redirect(constants.URL + '/inventory/')
+    return Response(status = status.HTTP_200_OK)
 
 
